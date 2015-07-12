@@ -15,10 +15,10 @@ namespace UltimateResponsiveSystem.Module
 
         public override void Execute(params object[] parameters)
         {
-            Shell32.Shell objShel = new Shell32.Shell();
+            Shell32.Shell objShell = new Shell32.Shell();
 
             // Show the desktop
-            ((Shell32.IShellDispatch4)objShel).ToggleDesktop();
+            objShell.ToggleDesktop();
 
             // Do some operations here
 
