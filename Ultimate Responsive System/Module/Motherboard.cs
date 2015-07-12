@@ -23,7 +23,7 @@ namespace UltimateResponsiveSystem.Module
 
             Type moduleType = GetModuleType(moduleAssembly.GetTypes());
 
-            if(moduleType == null) throw new InvalidDataException("The file provided does not contain a Module (no classes in the assembly inherit the Module class.");
+            if(moduleType == null) throw new InvalidDataException("The file provided does not contain a Module (no classes in the assembly inherit the Module class).");
 
             Modules.Add(moduleType);
         }
@@ -33,7 +33,7 @@ namespace UltimateResponsiveSystem.Module
             
         }
 
-        public void FindMatchinModule(string command)
+        public void FindMatchingModule(string command)
         {
             object obj = Activator.CreateInstance(Modules[0], null, null);
             Modules[0].GetMethod("TryCommandManage").Invoke(obj, new object[] { command });
