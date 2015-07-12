@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console Tester", "Console T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alarm", "Alarm\Alarm.csproj", "{742AD387-D47D-40A6-90B7-63DEFA536B8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Module", "Module\Module.csproj", "{AF7BBD60-8F4D-4A91-9674-B6FF999881A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{742AD387-D47D-40A6-90B7-63DEFA536B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{742AD387-D47D-40A6-90B7-63DEFA536B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{742AD387-D47D-40A6-90B7-63DEFA536B8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF7BBD60-8F4D-4A91-9674-B6FF999881A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF7BBD60-8F4D-4A91-9674-B6FF999881A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF7BBD60-8F4D-4A91-9674-B6FF999881A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF7BBD60-8F4D-4A91-9674-B6FF999881A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
