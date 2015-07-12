@@ -8,6 +8,7 @@ namespace Console_Tester
 {
     enum Commands
     {
-        Alarm = 0
+        Alarm = 0,
+        Emergency
     }
 }

@@ -17,7 +17,8 @@ namespace Console_Tester
         {
             //string[] commands = File.ReadAllLines("commands.txt");
             Motherboard motherboard = new Motherboard();
-            motherboard.AttachModule(CommandResources.GetCommandDLL(Commands.Alarm));
+            //motherboard.AttachModule(CommandResources.GetCommandDLL(Commands.Alarm));
+            motherboard.AttachModule(CommandResources.GetCommandDLL(Commands.Emergency));
             string command = Console.ReadLine();
 
             while (true)
@@ -28,7 +29,10 @@ namespace Console_Tester
                     case "quit":
                         return;
                     case "wake":
-                        motherboard.FindMatchinModule(command);
+                        motherboard.FindMatchingModule(command);
+                        break;
+                    case "porn":
+                        motherboard.FindMatchingModule(command);
                         break;
                 }
                 command = Console.ReadLine();

@@ -13,7 +13,8 @@ namespace Console_Tester
 
         public static readonly string[] DllNames =
         {
-            "Alarm.dll"
+            "Alarm.dll",
+            "Emergency.dll"
         };
 
         public static string GetCommandDLL(Commands command)
