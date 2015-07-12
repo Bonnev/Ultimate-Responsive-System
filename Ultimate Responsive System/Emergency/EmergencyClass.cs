@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,10 +16,13 @@ namespace UltimateResponsiveSystem.Module
 
         public override void Execute(params object[] parameters)
         {
-            Shell32.Shell objShel = new Shell32.Shell();
+            Type shellAppType = Type.GetTypeFromProgID("Shell.Application");
+            Object shellObject = Activator.CreateInstance(shellAppType);
+            shellAppType.InvokeMember("ToggleDesktop",BindingFlags.InvokeMethod, null, shellObject, null);
+            /*Shell32.Shell objShel = new Shell32.Shell();
 
             // Show the desktop
-            ((Shell32.IShellDispatch4)objShel).ToggleDesktop();
+            ((Shell32.IShellDispatch4)objShel).ToggleDesktop();*/
 
             // Do some operations here
 
