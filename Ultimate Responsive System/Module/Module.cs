@@ -21,26 +21,5 @@ namespace UltimateResponsiveSystem.Module
 
         public abstract bool TryCommandManage(string command);
 
-        public static string GetCommandKeywords()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-
-            foreach (Type type in assembly.GetExportedTypes())
-            {
-                if (type.Name != "Resources") continue;
-
-                foreach (PropertyInfo propertyInfo in type.GetProperties())
-                {
-                    if (propertyInfo.Name != "ResourceManager") continue;
-
-                    ResourceManager resourceManager = (ResourceManager)
-                        propertyInfo.GetMethod.Invoke(
-                            null, BindingFlags.InvokeMethod, null, new object[] { }, null);
-
-                    return resourceManager.GetString("CommandKeywords");
-                }
-            }
-            return null;
-        }
     }
 }

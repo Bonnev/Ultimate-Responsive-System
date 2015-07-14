@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace UltimateResponsiveSystem.Module
 {
+    using DomainSpecific;
+
     public class Motherboard
     {
-        public List<Type> Modules { get; private set; }
+        public List<Module> Modules { get; private set; }
 
         public Motherboard()
         {
-            Modules = new List<Type>();
+            Modules = new List<Module>();
         }
 
         public void AttachModule(string absoluteDllPath)
@@ -25,7 +26,8 @@ namespace UltimateResponsiveSystem.Module
 
             if(moduleType == null) throw new InvalidDataException("The file provided does not contain a Module (no classes in the assembly inherit the Module class).");
 
-            Modules.Add(moduleType);
+            Module moduleObject = (Module)Activator.CreateInstance(moduleType, null, null);
+            Modules.Add(moduleObject);
         }
 
         public void Detach()
@@ -35,28 +37,37 @@ namespace UltimateResponsiveSystem.Module
 
         public void FindMatchingModule(string command)
         {
-            object obj = Activator.CreateInstance(Modules[0], null, null);
-            Modules[0].GetMethod("TryCommandManage").Invoke(obj, new object[] { command });
+            Modules[0].TryCommandManage(command);
+        }
+
+        public string GenerateKeywordReport(string dllFolderPath)
+        {
+            var dlls = Directory.GetFiles(dllFolderPath).Where(f => Path.GetExtension(f) == ".dll").ToArray();
+
+            AppDomain domain = AppDomain.CreateDomain("dllLoader");
+            var mediator = (DomainMediator)
+                domain
+                .CreateInstanceFromAndUnwrap(
+                    typeof(DomainMediator).Assembly.Location,
+                    typeof(DomainMediator).FullName);
+            
+            mediator.LoadDlls(dlls);
+            string keywordsReport = mediator.GenerateKeywordsReport();
+
+            AppDomain.Unload(domain);
+            return keywordsReport;
         }
 
         private static Type GetModuleType(IEnumerable<Type> types)
         {
             foreach (Type type in types)
             {
-                if (type.IsClass && (typeof(Module)).IsAssignableFrom(type))
+                if (type.IsClass && !type.IsAbstract && (typeof(Module)).IsAssignableFrom(type))
                 {
                     return type;
                 }
             }
             return null;
-        }
-
-        private static bool FilterInterface(Type typeObj, Object criteriaObj)
-        {
-            if (typeObj.FullName == ((Type)criteriaObj).FullName)
-                return true;
-            else
-                return false;
         }
     }
 }

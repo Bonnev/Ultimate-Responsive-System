@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WMPLib;
 
@@ -10,12 +7,6 @@ namespace UltimateResponsiveSystem.Module
 {
     public class Alarm : Module
     {
-        public static void PlaySound(string file)
-        {
-            WindowsMediaPlayer player = new WindowsMediaPlayer {URL = file};
-            player.controls.play();
-        }
-
         public override string Name { get { return "Alarm"; } }
 
         public override async void Execute(params object[] parameters)
@@ -27,7 +18,7 @@ namespace UltimateResponsiveSystem.Module
 
             TimeSpan timeRemaining = dateTime - DateTime.Now;
             await Task.Delay(timeRemaining);
-            Console.WriteLine("Elapsed!");
+
             PlaySound(wakeSound);
         }
 
@@ -56,6 +47,12 @@ namespace UltimateResponsiveSystem.Module
                 }
             }
             return false;
+        }
+
+        private static void PlaySound(string file)
+        {
+            WindowsMediaPlayer player = new WindowsMediaPlayer {URL = file};
+            player.controls.play();
         }
     }
 }

@@ -9,7 +9,8 @@ namespace Console_Tester
 {
     static class CommandResources
     {
-        public const string DllDirectory = "DLLs";
+        public const string DllFolderName = "DLLs";
+        public static string DllFolderPath = DllFolderName;
 
         public static readonly string[] DllNames =
         {
@@ -17,16 +18,21 @@ namespace Console_Tester
             "Emergency.dll"
         };
 
-        public static string GetCommandDLL(Commands command)
+        public static void UpdateDllFolderPath()
+        {
+            string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string folderPath = exePath;
+            while (!Directory.GetDirectories(folderPath).Select(path => path.Split('\\').Last()).Contains(DllFolderName))
+            {
+                folderPath = Directory.GetParent(folderPath).FullName;
+            }
+            DllFolderPath = folderPath + "\\" + DllFolderName;
+        }
+
+        public static string GetCommandDll(Commands command)
         {
             int commandIndex = Convert.ToInt32(command);
-            string exePath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            StringBuilder upPath = new StringBuilder(".\\");
-            while (!Directory.GetDirectories(upPath.ToString()).Select(path => path.Split('\\').Last()).Contains(DllDirectory))
-            {
-                upPath.Append("..\\");
-            }
-            return String.Format("{0}\\{1}{2}\\{3}", exePath, upPath, DllDirectory, DllNames[commandIndex]);
+            return String.Format("{0}\\{1}", DllFolderPath, DllNames[commandIndex]);
         }
     }
 }
