@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Console_Tester
+namespace UltimateResponsiveSystem.Functionality.Testers
 {
     interface IBackgroundThread
     {

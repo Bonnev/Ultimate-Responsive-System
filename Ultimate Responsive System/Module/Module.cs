@@ -9,7 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UltimateResponsiveSystem.Module
+namespace UltimateResponsiveSystem.Structure.Base
 {
     public abstract class Module
     {

@@ -7,19 +7,19 @@ using System.Reflection;
 using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
-using UltimateResponsiveSystem.Module;
+using System.Windows.Forms;
 
-namespace Console_Tester
+namespace UltimateResponsiveSystem.Functionality.Testers
 {
+    using Structure;
+
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
-            CommandResources.UpdateDllFolderPath();
-            //string[] commands = File.ReadAllLines("commands.txt");
-            Motherboard motherboard = new Motherboard();
-            motherboard.AttachModule(CommandResources.GetCommandDll(Commands.Alarm));
-            //motherboard.AttachModule(CommandResources.GetCommandDll(Commands.Emergency));
+            ResourceEngine.UpdateDllFolderPath();
+
             string command = Console.ReadLine();
 
             while (true)
@@ -29,18 +29,24 @@ namespace Console_Tester
                     case "exit":
                     case "quit":
                         return;
-                    case "wake":
-                        motherboard.FindMatchingModule(command);
-                        break;
-                    case "porn":
-                        motherboard.FindMatchingModule(command);
-                        break;
                     case "update":
-                        string keywordReport =  motherboard.GenerateKeywordReport(CommandResources.DllFolderPath);
-                        File.WriteAllText("keywords.txt", keywordReport);
+                        Console.Write("Loading...");
+                        ResourceEngine.UpdateKeywords();
+                        ResourceEngine.LoadModules();
+                        break;
+                    default:
+                        ResourceEngine.TryFindMatchingModule(command);
                         break;
                 }
                 command = Console.ReadLine();
+                /*if (Console.KeyAvailable)
+                {
+                    var key = Console.ReadKey();
+                    if (key.Key == ConsoleKey.V && key.Modifiers == ConsoleModifiers.Control)
+                    {
+                        Console.WriteLine(Clipboard.GetText());
+                    }
+                }*/
             }
         }
     }

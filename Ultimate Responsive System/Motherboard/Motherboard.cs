@@ -5,39 +5,48 @@ using System.Linq;
 using System.Reflection;
 
 
-namespace UltimateResponsiveSystem.Module
+namespace UltimateResponsiveSystem.Structure.Base
 {
-    using DomainSpecific;
+    using Functionality.DomainSpecific;
 
     public class Motherboard
     {
-        public List<Module> Modules { get; private set; }
+        public Dictionary<string, Module> Modules { get; private set; }
 
         public Motherboard()
         {
-            Modules = new List<Module>();
+            Modules = new Dictionary<string, Module>();
         }
 
-        public void AttachModule(string absoluteDllPath)
+        public void AttachModule(string absoluteDllPath, bool errorIfAlreadyAttached = false)
         {
             Assembly moduleAssembly = Assembly.LoadFile(absoluteDllPath);
 
             Type moduleType = GetModuleType(moduleAssembly.GetTypes());
 
-            if(moduleType == null) throw new InvalidDataException("The file provided does not contain a Module (no classes in the assembly inherit the Module class).");
+            if (moduleType == null) throw new InvalidDataException("The file provided does not contain a Module (no classes in the assembly inherit the Module class).");
+
+            if(Modules.ContainsKey(moduleType.Name))
+            {
+                if (errorIfAlreadyAttached)
+                {
+                    throw new InvalidOperationException("Module already attached!");
+                }
+                return;
+            }
 
             Module moduleObject = (Module)Activator.CreateInstance(moduleType, null, null);
-            Modules.Add(moduleObject);
+            Modules.Add(moduleType.Name, moduleObject);
         }
 
         public void Detach()
         {
-            
+
         }
 
-        public void FindMatchingModule(string command)
+        public bool TryModuleExecute(string command, string moduleName)
         {
-            Modules[0].TryCommandManage(command);
+            return Modules[moduleName].TryCommandManage(command);
         }
 
         public string GenerateKeywordReport(string dllFolderPath)
@@ -50,7 +59,7 @@ namespace UltimateResponsiveSystem.Module
                 .CreateInstanceFromAndUnwrap(
                     typeof(DomainMediator).Assembly.Location,
                     typeof(DomainMediator).FullName);
-            
+
             mediator.LoadDlls(dlls);
             string keywordsReport = mediator.GenerateKeywordsReport();
 

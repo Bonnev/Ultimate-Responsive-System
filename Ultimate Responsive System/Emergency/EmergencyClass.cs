@@ -5,8 +5,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UltimateResponsiveSystem.Module
+namespace UltimateResponsiveSystem.Structure.Modules
 {
+    using Structure.Base;
     public class Emergency : Module
     {
         public override string Name { get { return "Emergency"; } }

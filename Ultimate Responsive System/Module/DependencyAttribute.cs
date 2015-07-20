@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UltimateResponsiveSystem.Module
+namespace UltimateResponsiveSystem.Structure.Base
 {
     public class DependencyAttribute : Attribute
     {

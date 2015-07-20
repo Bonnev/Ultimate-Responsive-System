@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
-using UltimateResponsiveSystem.Module;
 
-namespace UltimateResponsiveSystem.DomainSpecific
+namespace UltimateResponsiveSystem.Functionality.DomainSpecific
 {
-    using Module;
+    using Structure.Base;
 
     public static class KeywordsExtractor
     {

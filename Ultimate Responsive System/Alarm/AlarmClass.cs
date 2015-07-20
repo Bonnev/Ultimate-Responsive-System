@@ -3,8 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using WMPLib;
 
-namespace UltimateResponsiveSystem.Module
+namespace UltimateResponsiveSystem.Structure.Modules
 {
+    using Structure.Base;
     public class Alarm : Module
     {
         public override string Name { get { return "Alarm"; } }
